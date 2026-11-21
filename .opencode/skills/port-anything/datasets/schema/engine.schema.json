@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://port-anything.local/schema/engine.schema.json",
+  "title": "PAKB engine record",
+  "description": "Engine records are base records with category fixed to engine. Engine-specific facts belong in requirements, limitations, tags and notes so the canonical shape stays uniform.",
+  "allOf": [{ "$ref": "record.schema.json" }],
+  "type": "object",
+  "required": ["category"],
+  "properties": { "category": { "const": "engine" } }
+}

@@ -1,0 +1,114 @@
+{
+  "name": "Port Anything Knowledge Base",
+  "short_name": "PAKB",
+  "version": "1.0.0",
+  "schema_version": "1.0.0",
+  "description": "Structured records for game engines, platforms, graphics APIs, Android, Rust, C++, toolchains, file formats, architectures and build systems used by Port Anything.",
+  "license": "CC-BY-4.0",
+  "generated": "2026-11-21T08:54:14+00:00",
+  "total_records": 128,
+  "categories": {
+    "android": 11,
+    "architecture": 4,
+    "buildsystem": 9,
+    "cpp": 15,
+    "engine": 19,
+    "fileformat": 19,
+    "graphics": 12,
+    "platform": 17,
+    "rust": 12,
+    "toolchain": 10
+  },
+  "content_hash": "c33825858043c8091ac93908205dd215d660a51c5e4cc0a336d2fe37b36d75e7",
+  "records": [
+    {
+      "file": "android.jsonl",
+      "path": "records/android.jsonl",
+      "records": 11,
+      "sha256": "7ed15fea1dcd400716313a87bf07a66b378c5e9e2b37fc9f9f00d0909cb13440"
+    },
+    {
+      "file": "architecture.jsonl",
+      "path": "records/architecture.jsonl",
+      "records": 4,
+      "sha256": "3aa5f253d1c813a7a4a4016aea69dee5e39a818a8d3e4354bed596788b872e0f"
+    },
+    {
+      "file": "buildsystems.jsonl",
+      "path": "records/buildsystems.jsonl",
+      "records": 9,
+      "sha256": "d00ba3319cefa520502c12c94a3e06290a16b0c01086d51298e0d42118c62ae0"
+    },
+    {
+      "file": "cpp.jsonl",
+      "path": "records/cpp.jsonl",
+      "records": 15,
+      "sha256": "777e5be2a6eb8bdd8a7792225de0c2e66ad7123a05c83d6cf8302e85ade98904"
+    },
+    {
+      "file": "engines.jsonl",
+      "path": "records/engines.jsonl",
+      "records": 19,
+      "sha256": "cb1d5ff6f4b9f325b8e504436e7e45aed6507911e382e292ddec6802c68c8a0f"
+    },
+    {
+      "file": "fileformats.jsonl",
+      "path": "records/fileformats.jsonl",
+      "records": 19,
+      "sha256": "d7a329558070d1f59ba80c8d745f21029bcd73df861a7ceb40ea018cc641dd9e"
+    },
+    {
+      "file": "graphics.jsonl",
+      "path": "records/graphics.jsonl",
+      "records": 12,
+      "sha256": "1d5033bc512b66f7a78b138e220db5514731934c3c6cf01e6d5b3d6218e7cd41"
+    },
+    {
+      "file": "platforms.jsonl",
+      "path": "records/platforms.jsonl",
+      "records": 17,
+      "sha256": "de68093565c9997e54d8988e66dba5ccc40f6f319dc5570d23682105a68154d7"
+    },
+    {
+      "file": "rust.jsonl",
+      "path": "records/rust.jsonl",
+      "records": 12,
+      "sha256": "bfa7b3c84ac57f3b165813d4c1939197346fae44b54b129beef4e15d3cd2c4a4"
+    },
+    {
+      "file": "toolchains.jsonl",
+      "path": "records/toolchains.jsonl",
+      "records": 10,
+      "sha256": "e0e1b19ff5a0a8dad69bd0dd5b997b54167179a81949259bf9ce42c298f03840"
+    }
+  ],
+  "schemas": [
+    {
+      "file": "engine.schema.json",
+      "sha256": "852dccff8809f94c60ab46a689f39987e0c0c681e12983370ca6eecdc35189c7"
+    },
+    {
+      "file": "graphics.schema.json",
+      "sha256": "1e2cef86f00a4b68f19bfc260921263d2bf7ff70cb287bccbaa6bb78f9635219"
+    },
+    {
+      "file": "platform.schema.json",
+      "sha256": "c08198f0735a8a7f2f4ee2e0a4cc9e8faf2392483231aa535928b9d6ac60ee94"
+    },
+    {
+      "file": "record.schema.json",
+      "sha256": "faf969a170b598e5534fd56452a894dcca61e0d3c76dccf0ceaaff5e9fbda8b2"
+    },
+    {
+      "file": "toolchain.schema.json",
+      "sha256": "c32e34d18a69bee4f9c38a59bc58de505b059f68540fa822d2a38badbdd0f27d"
+    }
+  ],
+  "sources": "sources/source-registry.json",
+  "index": "index/pakb.sqlite",
+  "notes": [
+    "JSONL records are canonical. The SQLite database is generated.",
+    "Every record carries a source URL and a verification status.",
+    "Records are reviewed, not scraped. Unknown facts are marked unverified."
+  ]
+}

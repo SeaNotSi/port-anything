@@ -1,0 +1,18 @@
+{
+  // Port Anything — project configuration (OpenCode V2 schema).
+  //
+  // Nothing pins a model or provider: every agent inherits whatever model is
+  // selected in OpenCode. Add "model" to an agent only to force one.
+  "$schema": "https://opencode.ai/config.json",
+
+  "instructions": [".opencode/skills/port-anything/references/house-rules.md"],
+
+  "permissions": [
+    { "action": "skill", "resource": "port-anything", "effect": "allow" },
+    { "action": "webfetch", "resource": "*", "effect": "allow" },
+    { "action": "shell", "resource": "git push*", "effect": "deny" },
+    { "action": "shell", "resource": "sudo*", "effect": "deny" },
+    { "action": "shell", "resource": "*", "effect": "ask" },
+    { "action": "edit", "resource": "*", "effect": "ask" }
+  ]
+}

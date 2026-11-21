@@ -1,0 +1,15 @@
+{
+  "low_available_ratio": 0.10,
+  "medium_available_ratio": 0.25,
+  "low_available_bytes": 536870912,
+  "min_free_bytes": 402653184,
+  "concurrency": {
+    "low": 1,
+    "medium": 2,
+    "high": 3
+  },
+  "max_concurrency": 8,
+  "history_samples": 120,
+  "sample_interval_seconds": 1.0,
+  "reserve_cpu_factor": 0.5
+}

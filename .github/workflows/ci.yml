@@ -1,0 +1,93 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  python:
+    name: Python suite + CLI
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Installer is idempotent and non-destructive
+        run: ./bin/pa install --project --path "$RUNNER_TEMP/pa-install" --dry-run
+
+      - name: Dataset validates and indexes
+        run: |
+          ./bin/pa dataset validate
+          ./bin/pa dataset index
+          ./bin/pa dataset stats
+
+      - name: Reverse-engineering CLI smoke
+        run: |
+          ./bin/pa analyzers
+          ./bin/pa analyze /bin/sh
+
+      - name: Unit and integration tests
+        run: |
+          python3 -m unittest discover \
+            -s .opencode/skills/port-anything/tests \
+            -p 'test_*.py' -v
+
+  rust:
+    name: Rust runtime (offline)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: cargo test --offline
+        working-directory: .opencode/skills/port-anything/modules/ram-efficiency/native/pa-runtime
+        run: cargo test --offline
+
+      - name: Release build and --json
+        working-directory: .opencode/skills/port-anything/modules/ram-efficiency/native/pa-runtime
+        run: |
+          cargo build --release --offline
+          ./target/release/pa-runtime --json
+
+  cpp:
+    name: C++ probe (cmake + ctest)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure
+        run: |
+          cmake -S .opencode/skills/port-anything/modules/reverse-engineering/native/pa-probe \
+                -B "$RUNNER_TEMP/pa-probe" \
+                -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build "$RUNNER_TEMP/pa-probe"
+
+      - name: ctest
+        run: ctest --test-dir "$RUNNER_TEMP/pa-probe" --output-on-failure
+
+  termux-scripts:
+    name: Shell syntax
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: sh -n on every helper
+        run: |
+          set -eu
+          for file in .opencode/skills/port-anything/scripts/termux/*.sh bin/pa; do
+            sh -n "$file"
+            echo "ok $file"
+          done

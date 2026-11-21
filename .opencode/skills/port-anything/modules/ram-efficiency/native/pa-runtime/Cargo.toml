@@ -1,0 +1,23 @@
+[package]
+name = "pa-runtime"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.70"
+description = "Dependency-free memory probe and concurrency verdict for Port Anything"
+license = "MIT"
+publish = false
+
+[lib]
+name = "pa_runtime"
+path = "src/lib.rs"
+
+[[bin]]
+name = "pa-runtime"
+path = "src/main.rs"
+
+[dependencies]
+
+[profile.release]
+opt-level = 2
+strip = true
+panic = "abort"

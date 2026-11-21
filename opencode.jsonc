@@ -1,0 +1,52 @@
+{
+  // Port Anything — project-level OpenCode configuration (V2 schema).
+  //
+  // No model or provider is pinned here on purpose: every agent inherits the
+  // model selected in OpenCode. Add "model" to an agent only if you want to
+  // force one.
+  "$schema": "https://opencode.ai/config.json",
+
+  "instructions": [".opencode/skills/port-anything/references/house-rules.md"],
+
+  "permissions": [
+    { "action": "shell", "resource": "git push*", "effect": "deny" },
+    { "action": "shell", "resource": "sudo*", "effect": "deny" },
+    { "action": "shell", "resource": "rm -rf /*", "effect": "deny" },
+    { "action": "shell", "resource": "git status*", "effect": "allow" },
+    { "action": "shell", "resource": "git diff*", "effect": "allow" },
+    { "action": "shell", "resource": "git log*", "effect": "allow" },
+    { "action": "shell", "resource": "cargo test*", "effect": "allow" },
+    { "action": "shell", "resource": "cargo build*", "effect": "allow" },
+    { "action": "shell", "resource": "cargo check*", "effect": "allow" },
+    { "action": "shell", "resource": "python3 -m unittest*", "effect": "allow" },
+    { "action": "shell", "resource": "cmake --build*", "effect": "allow" },
+    { "action": "shell", "resource": "ninja*", "effect": "allow" },
+    { "action": "shell", "resource": "rm*", "effect": "ask" },
+    { "action": "shell", "resource": "pkg install*", "effect": "ask" },
+    { "action": "shell", "resource": "gradle*", "effect": "ask" },
+    { "action": "shell", "resource": "apksigner*", "effect": "ask" },
+    { "action": "shell", "resource": "*", "effect": "ask" },
+
+    { "action": "edit", "resource": "*", "effect": "ask" },
+    { "action": "webfetch", "resource": "*", "effect": "allow" },
+    { "action": "skill", "resource": "port-anything", "effect": "allow" }
+  ],
+
+  "agents": {
+    "port-orchestrator": {
+      "mode": "primary",
+      "description": "Port Anything lead: decomposes porting work, dispatches specialists, merges and validates results.",
+      "permissions": [
+        { "action": "subagent", "resource": "*", "effect": "deny" },
+        { "action": "subagent", "resource": "researcher", "effect": "allow" },
+        { "action": "subagent", "resource": "reverse-engineer", "effect": "allow" },
+        { "action": "subagent", "resource": "rust-engineer", "effect": "allow" },
+        { "action": "subagent", "resource": "cpp-engineer", "effect": "allow" },
+        { "action": "subagent", "resource": "android-engineer", "effect": "allow" },
+        { "action": "subagent", "resource": "graphics-engineer", "effect": "allow" },
+        { "action": "subagent", "resource": "optimizer", "effect": "allow" },
+        { "action": "subagent", "resource": "qa-engineer", "effect": "allow" }
+      ]
+    }
+  }
+}

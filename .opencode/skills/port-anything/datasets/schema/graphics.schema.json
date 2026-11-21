@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://port-anything.local/schema/graphics.schema.json",
+  "title": "PAKB graphics API record",
+  "allOf": [{ "$ref": "record.schema.json" }],
+  "type": "object",
+  "required": ["category"],
+  "properties": { "category": { "const": "graphics" } }
+}

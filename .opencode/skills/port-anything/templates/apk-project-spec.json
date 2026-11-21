@@ -1,0 +1,20 @@
+{
+  "//": "APK packaging spec for `pa apk build --spec file.json`.",
+  "//framework": "framework_jar is optional; set it (or ANDROID_SDK_ROOT) when the manifest uses android: attributes.",
+  "manifest": "app/AndroidManifest.xml",
+  "out": "app/build/app-unsigned.apk",
+  "resources": "app/res",
+  "assets": "app/assets",
+  "classes": ["app/build/classes"],
+  "native_libs": {
+    "arm64-v8a": ["app/build/lib/arm64-v8a/libgame.so"]
+  },
+  "keystore": "app/debug.p12",
+  "keystore_pass": "android",
+  "key_alias": "debug",
+  "key_pass": "android",
+  "package_name": "dev.example.port",
+  "version_code": 1,
+  "version_name": "0.1",
+  "min_sdk": 24
+}

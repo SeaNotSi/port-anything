@@ -1,0 +1,23 @@
+#!/bin/sh
+# Port Anything launcher (POSIX sh so it works on Termux, where /usr/bin/env
+# does not exist and python lives under $PREFIX/bin).
+set -eu
+
+SELF=$0
+case $SELF in
+  */*) DIR=$(cd "$(dirname "$SELF")" && pwd) ;;
+  *)   DIR=$(pwd) ;;
+esac
+ROOT=$(cd "$DIR/.." && pwd)
+
+SKILL="$ROOT/.opencode/skills/port-anything"
+if [ ! -f "$SKILL/scripts/pa.py" ]; then
+  # Global install layout: <prefix>/bin/pa and <prefix>/skills/port-anything
+  SKILL="$ROOT/skills/port-anything"
+fi
+if [ ! -f "$SKILL/scripts/pa.py" ]; then
+  echo "error: cannot locate skills/port-anything from $ROOT" >&2
+  exit 2
+fi
+
+exec python3 "$SKILL/scripts/pa.py" "$@"

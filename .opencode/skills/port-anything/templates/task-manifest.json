@@ -1,0 +1,52 @@
+{
+  "//": "Port Anything task manifest. Validate with: pa agents graph --manifest file.json",
+  "tasks": [
+    {
+      "id": "recon.engine",
+      "role": "researcher",
+      "objective": "Identify the engine, its version and the runtime libraries the shipped build links against, from the artifacts alone.",
+      "scope_in": ["target/"],
+      "scope_out": ["src/"],
+      "inputs": ["target/"],
+      "outputs": ["docs/analysis/engine.md"],
+      "owns": ["docs/analysis/engine.md"],
+      "done_criteria": [
+        "engine and version named, with the bytes or strings that prove it",
+        "each runtime dependency listed with the file that references it"
+      ],
+      "notes": "Report unverified guesses as guesses; do not promote them to findings."
+    },
+    {
+      "id": "re.triage",
+      "role": "reverse-engineer",
+      "objective": "Map the executable layout: entry points, main loop, asset loader and the calls into the engine runtime.",
+      "scope_in": ["target/"],
+      "scope_out": ["src/"],
+      "inputs": ["docs/analysis/engine.md", "target/"],
+      "outputs": ["analysis/layout.md"],
+      "owns": ["analysis/**"],
+      "depends_on": ["recon.engine"],
+      "done_criteria": [
+        "entry point and main loop addresses recorded with the disassembly that shows them",
+        "asset loader path documented end to end"
+      ]
+    },
+    {
+      "id": "build.native",
+      "role": "android-engineer",
+      "objective": "Stand up the Android build target and produce a signed debug APK that packages the native libraries on arm64-v8a.",
+      "scope_in": ["src/", "app/"],
+      "scope_out": ["analysis/"],
+      "inputs": ["analysis/layout.md", "app/AndroidManifest.xml"],
+      "outputs": ["app/build/app-debug.apk"],
+      "owns": ["app/**", "src/android/**"],
+      "depends_on": ["re.triage"],
+      "done_criteria": [
+        "aapt2 + d8 + apksigner path produces an APK",
+        "apksigner verify reports the signature valid",
+        "the artifact is inspected with `pa apk validate` before it is claimed"
+      ],
+      "notes": "An APK existing is not a port. Do not report runtime success without device evidence."
+    }
+  ]
+}

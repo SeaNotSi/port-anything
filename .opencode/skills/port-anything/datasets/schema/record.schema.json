@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://port-anything.local/schema/record.schema.json",
+  "title": "PAKB canonical record",
+  "description": "Base record for the Port Anything Knowledge Base. Every record in datasets/records/*.jsonl validates against this schema, optionally refined by a category schema.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "category",
+    "name",
+    "description",
+    "compatibility",
+    "dependencies",
+    "requirements",
+    "limitations",
+    "source",
+    "license",
+    "verification",
+    "last_verified"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*\\.[a-z0-9][a-z0-9_.-]*$",
+      "description": "Stable identifier: <category>.<slug>. Never reused for a different thing."
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "engine",
+        "platform",
+        "graphics",
+        "android",
+        "rust",
+        "cpp",
+        "toolchain",
+        "fileformat",
+        "architecture",
+        "buildsystem"
+      ]
+    },
+    "name": { "type": "string", "minLength": 1, "maxLength": 120 },
+    "version": {
+      "type": "string",
+      "maxLength": 80,
+      "description": "Version or version range this record describes. Empty when version-independent."
+    },
+    "description": { "type": "string", "minLength": 20, "maxLength": 1200 },
+    "compatibility": {
+      "type": "object",
+      "description": "Compatibility facts. Keys are stable capability names; values are one of the enum states.",
+      "additionalProperties": false,
+      "required": ["android", "arm64", "status"],
+      "properties": {
+        "android": { "$ref": "#/$defs/compat" },
+        "arm64": { "$ref": "#/$defs/compat" },
+        "x86_64": { "$ref": "#/$defs/compat" },
+        "windows": { "$ref": "#/$defs/compat" },
+        "linux": { "$ref": "#/$defs/compat" },
+        "macos": { "$ref": "#/$defs/compat" },
+        "vulkan": { "$ref": "#/$defs/compat" },
+        "opengl_es": { "$ref": "#/$defs/compat" },
+        "status": { "$ref": "#/$defs/compat" }
+      }
+    },
+    "dependencies": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[a-z][a-z0-9_]*\\.[a-z0-9][a-z0-9_.-]*$" },
+      "uniqueItems": true,
+      "description": "IDs of other PAKB records this record depends on."
+    },
+    "requirements": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1, "maxLength": 300 },
+      "description": "Concrete requirements: versions, SDK levels, licenses, hardware."
+    },
+    "limitations": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1, "maxLength": 300 },
+      "description": "Known limitations. Never leave empty to look good; state the real ones."
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["url", "type", "retrieved"],
+      "properties": {
+        "url": { "type": "string", "pattern": "^https?://" },
+        "type": {
+          "type": "string",
+          "enum": ["official_docs", "official_repo", "specification", "vendor_page", "measured_local", "community"]
+        },
+        "retrieved": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" }
+      }
+    },
+    "license": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "spdx"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "spdx": { "type": "string", "minLength": 1, "maxLength": 60 },
+        "url": { "type": "string", "pattern": "^https?://" },
+        "note": { "type": "string", "maxLength": 300 }
+      }
+    },
+    "verification": {
+      "type": "string",
+      "enum": ["verified", "partially_verified", "unverified", "deprecated", "unsupported"]
+    },
+    "last_verified": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1, "maxLength": 40 },
+      "uniqueItems": true
+    },
+    "notes": { "type": "string", "maxLength": 1000 }
+  },
+  "$defs": {
+    "compat": {
+      "type": "string",
+      "enum": ["supported", "partial", "unsupported", "unknown", "not_applicable"]
+    }
+  }
+}

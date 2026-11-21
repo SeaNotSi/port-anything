@@ -1,0 +1,12 @@
+{
+  "chars_per_token": 4.0,
+  "cjk_chars_per_token": 1.0,
+  "max_file_bytes": 67108864,
+  "context_default_budget": 32000,
+  "chunk_lines": 40,
+  "head_lines": 30,
+  "tail_lines": 20,
+  "max_files": 20000,
+  "cache_enabled": true,
+  "duplicate_near_threshold": 0.85
+}

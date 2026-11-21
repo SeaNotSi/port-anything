@@ -1,0 +1,63 @@
+# Build output
+target/
+build/
+dist/
+out/
+*.o
+*.so
+*.a
+*.dylib
+*.dll
+*.class
+*.dex
+*.apk
+*.aab
+*.idsig
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+
+# Generated dataset index (rebuild with `pa dataset index`)
+.opencode/skills/port-anything/datasets/index/*.db
+.opencode/skills/port-anything/datasets/index/*.db-journal
+.opencode/skills/port-anything/datasets/index/*.db-wal
+.opencode/skills/port-anything/datasets/index/*.sqlite
+.opencode/skills/port-anything/datasets/index/*.sqlite-journal
+.opencode/skills/port-anything/datasets/index/*.sqlite-wal
+
+# Local state / caches
+.pa-cache/
+.pa-state/
+*.log
+*.tmp
+.DS_Store
+
+# Android signing material — never commit
+*.keystore
+*.jks
+keystore.properties
+local.properties
+
+# Local config overrides
+config/local.yaml
+config/*.local.yaml
+
+# User game payloads and extracted assets
+samples/
+payloads/
+assets/
+*.pck
+*.uasset
+*.pak
+
+# Editor
+.idea/
+.vscode/
+*.swp
